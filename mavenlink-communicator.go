@@ -1,9 +1,9 @@
 package main
 
 import (
-	API "git.costrategix.net/go/mavenlink-communicator/api"
-	LOG "git.costrategix.net/go/mavenlink-communicator/log"
-	communicator "git.costrategix.net/go/mavenlink-communicator/proto/mavenlink-communicator"
+	API "github.com/desertjinn/mavenlink-communicator/api"
+	LOG "github.com/desertjinn/mavenlink-communicator/log"
+	communicator "github.com/desertjinn/mavenlink-communicator/proto/mavenlink-communicator"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/micro/go-micro"
 	//k8s "github.com/micro/kubernetes/go/micro"

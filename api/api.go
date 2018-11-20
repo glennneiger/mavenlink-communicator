@@ -2,7 +2,7 @@ package api
 
 import (
 	"fmt"
-	communicator "git.costrategix.net/go/mavenlink-communicator/proto/mavenlink-communicator"
+	communicator "github.com/desertjinn/mavenlink-communicator/proto/mavenlink-communicator"
 	"github.com/micro/go-log"
 	"github.com/pkg/errors"
 	"net/url"

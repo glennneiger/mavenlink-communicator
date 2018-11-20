@@ -1,6 +1,6 @@
 FROM golang:1.11.0 as builder
 
-WORKDIR /go/src/git.costrategix.net/go/mavenlink-communicator
+WORKDIR /go/src/github.com/desertjinn/mavenlink-communicator
 
 COPY . .
 
@@ -16,6 +16,6 @@ RUN apt-get update
 RUN apt-get install -y ca-certificates
 RUN update-ca-certificates
 
-COPY --from=builder /go/src/git.costrategix.net/go/mavenlink-communicator .
+COPY --from=builder /go/src/github.com/desertjinn/mavenlink-communicator .
 
 CMD ["./mavenlink-communicator"]
