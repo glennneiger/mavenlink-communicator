@@ -17,3 +17,7 @@ Dockerfile.backup
 
 # Make file
 Makefile
+
+# IDE folders
+.idea/
+
