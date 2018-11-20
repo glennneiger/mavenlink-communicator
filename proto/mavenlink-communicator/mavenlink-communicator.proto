@@ -1,0 +1,195 @@
+syntax = 'proto3';
+
+package costrategix.service.mavenlink.communicator;
+
+service MavenlinkCommunicator {
+    rpc GetAllProjects(Request) returns (Response) {}
+    rpc GetProjectById(Request) returns (Response) {}
+    rpc GetTasksByProjectId(Request) returns (Response) {}
+    rpc GetSubTasksByParentTaskAndProjectId(Request) returns (Response) {}
+    rpc GetTasksBySubTaskParentTaskAndProjectId(Request) returns (Response) {}
+    rpc GetTimeentries(Request) returns (Response) {}
+    rpc GetUsers(Request) returns (Response) {}
+    rpc GetUser(Request) returns (Response) {}
+}
+
+message Project {
+    string id                = 1;
+    string title             = 2;
+    string description       = 3;
+    string accessLevel       = 4;
+    int32  accountId         = 5;
+    bool   archived          = 6;
+    string currency          = 7;
+    string currencySymbol    = 8;
+    string dueDate           = 9;
+    string effectiveDueDate  = 10;
+    string startDate         = 11;
+    string createdAt         = 12;
+    string updatedAt         = 13;
+}
+
+message Task {
+    string id                 = 1;
+    string title              = 2;
+    string description        = 3;
+    string story_type         = 4;
+    string priority           = 5;
+    bool   archived           = 6;
+    string workspace_id       = 7;
+    string creator_id         = 8;
+    string parent_id          = 9;
+    string due_date           = 10;
+    string state              = 11;
+    string start_date         = 12;
+    string created_at         = 13;
+    string updated_at         = 14;
+    User user                 = 15;
+}
+
+message Timeentry {
+    string id                 = 1;
+    string date_performed     = 2;
+    int32  time_in_minutes    = 3;
+    string notes              = 4;
+    string workspace_id       = 5;
+    string story_id           = 6;
+    string created_at         = 7;
+    string updated_at         = 8;
+    User user                 = 9;
+}
+
+message User {
+    string id = 1;
+    string full_name = 2;
+    string email_address = 3;
+    string headline = 4;
+    string account_id = 5;
+}
+
+message MavenlinkResponseResults {
+    string key = 1;
+    string id  = 2;
+}
+message MavenlinkWorkspace {
+    string id                 = 1;
+    string title              = 2;
+    string description        = 3;
+    string access_level       = 4;
+    int32  account_id         = 5;
+    bool   archived           = 6;
+    string currency           = 7;
+    string currency_symbol    = 8;
+    string due_date           = 9;
+    string effective_due_date = 10;
+    string start_date         = 11;
+    string created_at         = 12;
+    string updated_at         = 13;
+}
+message MavenlinkStory {
+    string id                 = 1;
+    string title              = 2;
+    string description        = 3;
+    string story_type         = 4;
+    string priority           = 5;
+    bool   archived           = 6;
+    string workspace_id       = 7;
+    string creator_id         = 8;
+    string parent_id          = 9;
+    string due_date           = 10;
+    string state              = 11;
+    string start_date         = 12;
+    string created_at         = 13;
+    string updated_at         = 14;
+    repeated string assignee_ids = 15;
+}
+message MavenlinkTimeentry {
+    string id                 = 1;
+    string date_performed     = 2;
+    int32  time_in_minutes    = 3;
+    int32  rate_in_cents      = 4;
+    string notes              = 5;
+    bool   billable           = 6;
+    string workspace_id       = 7;
+    string story_id           = 8;
+    string currency           = 9;
+    int32  currency_base_unit = 10;
+    bool   user_can_edit      = 11;
+    bool   approved           = 12;
+    string user_id            = 13;
+    string created_at         = 14;
+    string updated_at         = 15;
+}
+message MavenlinkUser{
+     string id = 1;
+     string full_name = 2;
+     string photo_path = 3;
+     string email_address = 4;
+     string headline = 5;
+     bool generic = 6;
+     bool disabled = 7;
+     repeated string update_whitelist = 8;
+     string account_id = 9;
+}
+message MavenlinkResponseMeta {
+    int32 count       = 1;
+    int32 page_count  = 2;
+    int32 page_number = 3;
+    int32 page_Size   = 4;
+}
+message MavenlinkWorkspacesResponse {
+    int32 count =  1;
+    MavenlinkResponseMeta meta = 2;
+    repeated MavenlinkResponseResults results = 3;
+    map<string, MavenlinkWorkspace> workspaces = 4;
+    map<string, MavenlinkStory> stories = 5;
+}
+message MavenlinkStoriesResponse {
+    int32 count =  1;
+    MavenlinkResponseMeta meta = 2;
+    repeated MavenlinkResponseResults results = 3;
+    map<string, MavenlinkStory> stories = 4;
+}
+message MavenlinkTimeEntriesResponse {
+    int32 count =  1;
+    MavenlinkResponseMeta meta = 2;
+    repeated MavenlinkResponseResults results = 3;
+    map<string, MavenlinkTimeentry> time_entries = 4;
+}
+message MavenlinkUsersResponse {
+    int32 count =  1;
+    MavenlinkResponseMeta meta = 2;
+    repeated MavenlinkResponseResults results = 3;
+    map<string, MavenlinkUser> users = 4;
+}
+
+message Error {
+    int32  code        = 1;
+    string description = 2;
+}
+
+message Request {
+    string keyOrId = 1;
+    string workspace = 2;
+    string task = 3;
+    string subTask = 4;
+    string issueTask = 5;
+}
+
+message Response {
+    Project          project  = 1;
+    repeated Project projects = 2;
+    Task             task     = 4;
+    repeated Task    tasks    = 5;
+    Timeentry        timeentry = 6;
+    repeated Timeentry timeentries = 7;
+    User             user = 8;
+    repeated User users = 9;
+    Error            error    = 10;
+}
+
+message EnvironmentConfiguration {
+    bool   debug  = 1;
+    string url    = 2;
+    string token  = 3;
+}
